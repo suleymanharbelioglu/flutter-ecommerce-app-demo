@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_theme.dart';
+import 'package:flutter_ecommerce_app/presentation/splash/bloc/splash_cubit.dart';
+import 'package:flutter_ecommerce_app/presentation/splash/pages/splash.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,13 +11,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.appTheme,
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Material App Bar')),
-        body: const Center(child: Text('Hello World')),
+    return BlocProvider(
+      create: (context) => SplashCubit()..appStarted(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.appTheme,
+        title: 'Flutter Ecommerce',
+        home: SplashPage(),
       ),
     );
   }

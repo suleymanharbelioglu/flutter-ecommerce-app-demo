@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/common/widgets/button/basic_app_button.dart';
+import 'package:flutter_ecommerce_app/data/auth/model/user_signin_req.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/pages/forgot_password.dart';
 
 class EnterPasswordPage extends StatelessWidget {
-  EnterPasswordPage({super.key});
+  final UserSigninReq signinReq;
+  EnterPasswordPage({super.key, required this.signinReq});
 
-  final TextEditingController _passwordCon = TextEditingController();
+  final TextEditingController _passwordCon = TextEditingController(
+    text: "cmylmZ.31",
+  );
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,9 @@ import 'package:flutter_ecommerce_app/presentation/auth/pages/password_reset_ema
 class ForgotPasswordPage extends StatelessWidget {
   ForgotPasswordPage({super.key});
 
-  final TextEditingController _emailCon = TextEditingController();
+  final TextEditingController _emailCon = TextEditingController(
+    text: "harba.suleyman@gmail.com",
+  );
 
   @override
   Widget build(BuildContext context) {

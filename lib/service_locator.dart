@@ -13,39 +13,26 @@ final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
   // Services
-  
-  sl.registerSingleton<AuthFirebaseService>(
-    AuthFirebaseServiceImpl()
-  );
+
+  sl.registerSingleton<AuthFirebaseService>(AuthFirebaseServiceImpl());
+
   // Repositories
 
-  sl.registerSingleton<AuthRepository>(
-    AuthRepositoryImpl()
-  );
+  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl());
+
   // Usecases
 
-  sl.registerSingleton<SignupUseCase>(
-    SignupUseCase()
-  );
+  sl.registerSingleton<SignupUseCase>(SignupUseCase());
 
-  sl.registerSingleton<GetAgesUseCase>(
-    GetAgesUseCase()
-  );
+  sl.registerSingleton<GetAgesUseCase>(GetAgesUseCase());
 
-  sl.registerSingleton<SigninUseCase>(
-    SigninUseCase()
-  );
+  sl.registerSingleton<SigninUseCase>(SigninUseCase());
 
   sl.registerSingleton<SendPasswordResetEmailUseCase>(
-    SendPasswordResetEmailUseCase()
+    SendPasswordResetEmailUseCase(),
   );
 
-  sl.registerSingleton<IsLoggedInUseCase>(
-    IsLoggedInUseCase()
-  );
+  sl.registerSingleton<IsLoggedInUseCase>(IsLoggedInUseCase());
 
-  sl.registerSingleton<GetUserUseCase>(
-    GetUserUseCase()
-  );
-
+  sl.registerSingleton<GetUserUseCase>(GetUserUseCase());
 }

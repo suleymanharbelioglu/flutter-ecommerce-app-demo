@@ -5,10 +5,12 @@ import 'package:flutter_ecommerce_app/core/configs/theme/app_theme.dart';
 import 'package:flutter_ecommerce_app/firebase_options.dart';
 import 'package:flutter_ecommerce_app/presentation/splash/bloc/splash_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/splash/pages/splash.dart';
+import 'package:flutter_ecommerce_app/service_locator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await initializeDependencies();
   runApp(const MyApp());
 }
 

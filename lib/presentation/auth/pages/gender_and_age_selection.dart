@@ -1,35 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_app/common/bloc/button/button_cubit.dart';
+import 'package:flutter_ecommerce_app/common/helper/bottomsheet/app_bottomsheet.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/common/widgets/button/basic_app_button.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
+import 'package:flutter_ecommerce_app/data/auth/model/user_creation_req.dart';
+import 'package:flutter_ecommerce_app/presentation/auth/bloc/age_selection_cubit.dart';
+import 'package:flutter_ecommerce_app/presentation/auth/bloc/ages_display_cubit.dart';
+import 'package:flutter_ecommerce_app/presentation/auth/bloc/gender_selection_cubit.dart';
+import 'package:flutter_ecommerce_app/presentation/auth/widgets/ages.dart';
 
 class GenderAndAgeSelectionPage extends StatelessWidget {
-  const GenderAndAgeSelectionPage({super.key});
+  final UserCreationReq userCreationReq;
+  const GenderAndAgeSelectionPage({super.key, required this.userCreationReq});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BasicAppbar(hideBack: false),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _tellUs(),
-                const SizedBox(height: 30),
-                _genders(context),
-                const SizedBox(height: 30),
-                howOld(),
-                const SizedBox(height: 30),
-                _age(),
-              ],
-            ),
-          ),
-          const Spacer(),
-          _finishButton(context),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => GenderSelectionCubit()),
+          BlocProvider(create: (context) => AgeSelectionCubit()),
+          BlocProvider(create: (context) => ButtonStateCubit()),
+          BlocProvider(create: (context) => AgesDisplayCubit()),
         ],
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _tellUs(),
+                  const SizedBox(height: 30),
+                  _genders(context),
+                  const SizedBox(height: 30),
+                  howOld(),
+                  const SizedBox(height: 30),
+                  _age(),
+                ],
+              ),
+            ),
+            const Spacer(),
+            _finishButton(context),
+          ],
+        ),
       ),
     );
   }
@@ -42,13 +59,17 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
   }
 
   Widget _genders(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        genderTile(context, 1, 'Men'),
-        const SizedBox(width: 20),
-        genderTile(context, 2, 'Women'),
-      ],
+    return BlocBuilder<GenderSelectionCubit, int>(
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            genderTile(context, 1, 'Men'),
+            const SizedBox(width: 20),
+            genderTile(context, 2, 'Women'),
+          ],
+        );
+      },
     );
   }
 
@@ -56,11 +77,17 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
     return Expanded(
       flex: 1,
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          context.read<GenderSelectionCubit>().selectGender(genderIndex);
+        },
         child: Container(
           height: 60,
           decoration: BoxDecoration(
-            color: AppColors.secondBackground,
+            color:
+                context.read<GenderSelectionCubit>().selectedIndex ==
+                    genderIndex
+                ? AppColors.primary
+                : AppColors.secondBackground,
             borderRadius: BorderRadius.circular(30),
           ),
           child: Center(
@@ -82,20 +109,45 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
   }
 
   Widget _age() {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        height: 60,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
-          color: AppColors.secondBackground,
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text("Age Range"), const Icon(Icons.keyboard_arrow_down)],
-        ),
-      ),
+    return BlocBuilder<AgeSelectionCubit, String>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            AppBottomsheet.display(
+              context,
+              MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(value: context.read<AgeSelectionCubit>()),
+                  BlocProvider.value(
+                    value: context.read<AgesDisplayCubit>()..displayAges(),
+                  ),
+                ],
+                child: Ages(),
+              ),
+            );
+          },
+          child: Container(
+            height: 60,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: AppColors.secondBackground,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Container(
+              height: 60,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: AppColors.secondBackground,
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text(state), const Icon(Icons.keyboard_arrow_down)],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

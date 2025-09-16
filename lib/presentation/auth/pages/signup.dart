@@ -3,16 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/common/widgets/button/basic_app_button.dart';
+import 'package:flutter_ecommerce_app/data/auth/model/user_creation_req.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/pages/gender_and_age_selection.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/pages/signin.dart';
 
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
 
-  final TextEditingController _firstNameCon = TextEditingController();
-  final TextEditingController _lastNameCon = TextEditingController();
-  final TextEditingController _emailCon = TextEditingController();
-  final TextEditingController _passwordCon = TextEditingController();
+  final TextEditingController _firstNameCon = TextEditingController(
+    text: "suleyman",
+  );
+  final TextEditingController _lastNameCon = TextEditingController(
+    text: "harbelioglu",
+  );
+  final TextEditingController _emailCon = TextEditingController(
+    text: "harba.suleyman@gmail.com",
+  );
+  final TextEditingController _passwordCon = TextEditingController(
+    text: "cmylmZ.31",
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +89,17 @@ class SignupPage extends StatelessWidget {
   Widget _continueButton(BuildContext context) {
     return BasicAppButton(
       onPressed: () {
-        AppNavigator.push(context, GenderAndAgeSelectionPage());
+        AppNavigator.push(
+          context,
+          GenderAndAgeSelectionPage(
+            userCreationReq: UserCreationReq(
+              firstName: _firstNameCon.text,
+              email: _emailCon.text,
+              lastName: _lastNameCon.text,
+              password: _passwordCon.text,
+            ),
+          ),
+        );
       },
       title: 'Continue',
     );

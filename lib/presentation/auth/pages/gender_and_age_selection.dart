@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/common/bloc/button/button_cubit.dart';
+import 'package:flutter_ecommerce_app/common/bloc/button/button_state.dart';
 import 'package:flutter_ecommerce_app/common/helper/bottomsheet/app_bottomsheet.dart';
+import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
-import 'package:flutter_ecommerce_app/common/widgets/button/basic_app_button.dart';
+import 'package:flutter_ecommerce_app/common/widgets/button/basic_reactive_button.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/data/auth/model/user_creation_req.dart';
+import 'package:flutter_ecommerce_app/domain/auth/usecases/siginup.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/bloc/age_selection_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/bloc/ages_display_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/bloc/gender_selection_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/widgets/ages.dart';
+import 'package:flutter_ecommerce_app/presentation/home/pages/home.dart';
 
 class GenderAndAgeSelectionPage extends StatelessWidget {
   final UserCreationReq userCreationReq;
@@ -26,26 +30,43 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
           BlocProvider(create: (context) => ButtonStateCubit()),
           BlocProvider(create: (context) => AgesDisplayCubit()),
         ],
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _tellUs(),
-                  const SizedBox(height: 30),
-                  _genders(context),
-                  const SizedBox(height: 30),
-                  howOld(),
-                  const SizedBox(height: 30),
-                  _age(),
-                ],
+        child: BlocListener<ButtonStateCubit, ButtonState>(
+          listener: (context, state) {
+            if (state is ButtonFailureState) {
+              var snackbar = SnackBar(
+                content: Text(state.errorMessage),
+                behavior: SnackBarBehavior.floating,
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snackbar);
+            }
+            if (state is ButtonSuccessState) {
+              AppNavigator.pushAndRemove(context, HomePage());
+            }
+          },
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 40,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _tellUs(),
+                    const SizedBox(height: 30),
+                    _genders(context),
+                    const SizedBox(height: 30),
+                    howOld(),
+                    const SizedBox(height: 30),
+                    _age(),
+                  ],
+                ),
               ),
-            ),
-            const Spacer(),
-            _finishButton(context),
-          ],
+              const Spacer(),
+              _finishButton(context),
+            ],
+          ),
         ),
       ),
     );
@@ -159,7 +180,21 @@ class GenderAndAgeSelectionPage extends StatelessWidget {
       child: Center(
         child: Builder(
           builder: (context) {
-            return BasicAppButton(onPressed: () {}, title: 'Finish');
+            return BasicReactiveButton(
+              onPressed: () {
+                userCreationReq.gender = context
+                    .read<GenderSelectionCubit>()
+                    .selectedIndex;
+                userCreationReq.age = context
+                    .read<AgeSelectionCubit>()
+                    .selectedAge;
+                context.read<ButtonStateCubit>().execute(
+                  usecase: SignupUseCase(),
+                  params: userCreationReq,
+                );
+              },
+              title: 'Finish',
+            );
           },
         ),
       ),

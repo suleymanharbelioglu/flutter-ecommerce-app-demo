@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce_app/domain/auth/usecases/is_logged_in.dart';
 import 'package:flutter_ecommerce_app/domain/auth/usecases/send_password_reset_email.dart';
 import 'package:flutter_ecommerce_app/domain/auth/usecases/siginup.dart';
 import 'package:flutter_ecommerce_app/domain/auth/usecases/signin.dart';
+import 'package:flutter_ecommerce_app/domain/auth/usecases/signout.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
@@ -35,4 +36,5 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<IsLoggedInUseCase>(IsLoggedInUseCase());
 
   sl.registerSingleton<GetUserUseCase>(GetUserUseCase());
+  sl.registerSingleton<SignoutUseCase>(SignoutUseCase());
 }

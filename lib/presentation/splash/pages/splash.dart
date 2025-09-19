@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart
 import 'package:flutter_ecommerce_app/core/configs/assets/app_vectors.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/pages/signin.dart';
+import 'package:flutter_ecommerce_app/presentation/home/pages/home.dart';
 import 'package:flutter_ecommerce_app/presentation/splash/bloc/splash_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/splash/bloc/splash_state.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,6 +18,9 @@ class SplashPage extends StatelessWidget {
       listener: (context, state) {
         if (state is UnAuthenticated) {
           AppNavigator.pushAndRemove(context, SigninPage());
+        }
+        if (state is Authenticated) {
+          AppNavigator.pushAndRemove(context, HomePage());
         }
       },
       child: Scaffold(

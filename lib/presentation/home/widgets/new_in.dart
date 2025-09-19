@@ -30,8 +30,9 @@ class NewIn extends StatelessWidget {
   _products() {
     return Container(
       height: 300,
-      color: Colors.red,
+      // color: Colors.red,
       child: ListView.separated(
+        shrinkWrap: true,
         padding: EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {

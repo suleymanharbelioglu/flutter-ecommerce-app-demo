@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_app/core/configs/assets/app_images.dart';
 import 'package:flutter_ecommerce_app/core/configs/assets/app_vectors.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
+import 'package:flutter_ecommerce_app/domain/auth/entity/user.dart';
+import 'package:flutter_ecommerce_app/presentation/home/bloc/user_info_display_cubit.dart';
+import 'package:flutter_ecommerce_app/presentation/home/bloc/user_info_display_state.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Header extends StatelessWidget {
@@ -8,24 +13,54 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 40, right: 16, left: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [_profileImage(), _gender(), _card()],
+    return BlocProvider(
+      create: (context) => UserInfoDisplayCubit()..displayUserInfo(),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 40, right: 16, left: 16),
+        child: BlocBuilder<UserInfoDisplayCubit, UserInfoDisplayState>(
+          builder: (context, state) {
+            if (state is UserInfoLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
+            if (state is UserInfoLoaed) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _profileImage(state.user, context),
+                  _gender(state.user),
+                  _card(context),
+                ],
+              );
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }
 
-  _profileImage() {
-    return Container(
-      height: 40,
-      width: 40,
-      decoration: BoxDecoration(color: Colors.red, shape: BoxShape.circle),
+  _profileImage(UserEntity user, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // go to settings page
+      },
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          color: Colors.red,
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: user.image.isEmpty
+                ? AssetImage(AppImages.profile)
+                : NetworkImage(user.image),
+          ),
+        ),
+      ),
     );
   }
 
-  _gender() {
+  _gender(UserEntity user) {
     return Container(
       height: 40,
       padding: EdgeInsets.symmetric(horizontal: 16),
@@ -35,22 +70,27 @@ class Header extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          "Men",
+          user.gender == 1 ? "Men" : "Women",
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
         ),
       ),
     );
   }
 
-  _card() {
-    return Container(
-      height: 40,
-      width: 40,
-      decoration: BoxDecoration(
-        color: AppColors.primary,
-        shape: BoxShape.circle,
+  _card(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        // go to cart page
+      },
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          color: AppColors.primary,
+          shape: BoxShape.circle,
+        ),
+        child: SvgPicture.asset(AppVectors.bag, fit: BoxFit.none),
       ),
-      child: SvgPicture.asset(AppVectors.bag, fit: BoxFit.none),
     );
   }
 }

@@ -11,7 +11,9 @@ class SearchField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: TextField(
         readOnly: true,
-        onTap: () {},
+        onTap: () {
+          // go to search page
+        },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.all(12),
           focusedBorder: OutlineInputBorder(

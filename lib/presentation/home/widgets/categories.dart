@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_app/common/bloc/category/categories_display_cubit.dart';
+import 'package:flutter_ecommerce_app/common/bloc/category/categories_display_state.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [_seeAll(), SizedBox(height: 20), _categories()]);
+    return BlocProvider(
+      create: (context) => CategoriesDisplayCubit()..displayCategories(),
+      child: BlocBuilder<CategoriesDisplayCubit, CategoriesDisplayState>(
+        builder: (context, state) {
+          if (state is CategoriesLoading) {
+            return CircularProgressIndicator();
+          }
+          if (state is CategoriesLoaded) {
+            return Column(
+              children: [_seeAll(), SizedBox(height: 20), _categories()],
+            );
+          }
+          return Container();
+        },
+      ),
+    );
   }
 
   _seeAll() {

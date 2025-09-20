@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/common/bloc/category/categories_display_cubit.dart';
 import 'package:flutter_ecommerce_app/common/bloc/category/categories_display_state.dart';
+import 'package:flutter_ecommerce_app/common/helper/images/image_display.dart';
+import 'package:flutter_ecommerce_app/domain/category/entity/category.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});
@@ -17,7 +19,11 @@ class Categories extends StatelessWidget {
           }
           if (state is CategoriesLoaded) {
             return Column(
-              children: [_seeAll(), SizedBox(height: 20), _categories()],
+              children: [
+                _seeAll(context),
+                SizedBox(height: 20),
+                _categories(state.categories),
+              ],
             );
           }
           return Container();
@@ -26,7 +32,7 @@ class Categories extends StatelessWidget {
     );
   }
 
-  _seeAll() {
+  _seeAll(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -36,21 +42,27 @@ class Categories extends StatelessWidget {
             "Categories",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
-          Text(
-            "See All",
-            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+          GestureDetector(
+            onTap: () {
+              // All Categories Page
+            },
+            child: Text(
+              "See All",
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+            ),
           ),
         ],
       ),
     );
   }
 
-  _categories() {
+  _categories(List<CategoryEntity> categories) {
     return Container(
       height: 100,
       color: Colors.transparent,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.symmetric(horizontal: 16),
         itemBuilder: (context, index) {
           return Column(
             children: [
@@ -60,17 +72,25 @@ class Categories extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(
+                      ImageDisplayHelper.generateCategoryImageURL(
+                        categories[index].image,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: 18),
-              Text("title"),
+              Text(categories[index].title),
             ],
           );
         },
         separatorBuilder: (context, index) {
           return SizedBox(width: 15);
         },
-        itemCount: 10,
+        itemCount: categories.length,
       ),
     );
   }

@@ -1,11 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_ecommerce_app/data/product/model/product.dart';
+import 'package:flutter_ecommerce_app/domain/product/entity/product.dart';
 
 abstract class ProductFirebaseService {
   Future<Either> getTopSelling();
   Future<Either> getNewIn();
   Future<Either> getProductByCategoryId(String categoryId);
   Future<Either> getProductsByTitle(String title);
+  Future<Either> addOrRemoveFavoriteProduct(ProductEntity product);
+  Future<bool> isFavorite(String productId);
 }
 
 class ProductFirebaseServiceImpl extends ProductFirebaseService {
@@ -58,6 +63,52 @@ class ProductFirebaseServiceImpl extends ProductFirebaseService {
       return Right(returnedData.docs.map((e) => e.data()).toList());
     } catch (e) {
       return Left("Please try again");
+    }
+  }
+
+  @override
+  Future<Either> addOrRemoveFavoriteProduct(ProductEntity product) async {
+    try {
+      var user = FirebaseAuth.instance.currentUser;
+      var products = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(user!.uid)
+          .collection("Favorites")
+          .where("productId", isEqualTo: product.productId)
+          .get();
+      if (products.docs.isNotEmpty) {
+        await products.docs.first.reference.delete();
+        return Right(false);
+      } else {
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .doc(user.uid)
+            .collection("Favorites")
+            .add(product.fromEntity().toMap());
+        return Right(true);
+      }
+    } catch (e) {
+      return Left("Please try again");
+    }
+  }
+
+  @override
+  Future<bool> isFavorite(String productId) async {
+    try {
+      var user = FirebaseAuth.instance.currentUser;
+      var products = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(user!.uid)
+          .collection("Favorites")
+          .where("productId", isEqualTo: productId)
+          .get();
+          if(products.docs.isNotEmpty){
+            return true;
+          }else{
+            return false;
+          }
+    } catch (e) {
+      return false;
     }
   }
 }

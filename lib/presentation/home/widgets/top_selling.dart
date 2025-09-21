@@ -59,7 +59,7 @@ class TopSelling extends StatelessWidget {
           return ProductCard(productEntity: products[index]);
         },
         separatorBuilder: (context, index) => const SizedBox(width: 10),
-        itemCount: 10,
+        itemCount: products.length,
       ),
     );
   }

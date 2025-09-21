@@ -15,6 +15,7 @@ import 'package:flutter_ecommerce_app/domain/auth/usecases/signout.dart';
 import 'package:flutter_ecommerce_app/domain/category/repository/category_repository.dart';
 import 'package:flutter_ecommerce_app/domain/category/usecases/get_categories.dart';
 import 'package:flutter_ecommerce_app/domain/product/repository/product.dart';
+import 'package:flutter_ecommerce_app/domain/product/usecases/get_new_in.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_top_selling.dart';
 import 'package:get_it/get_it.dart';
 
@@ -51,4 +52,5 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SignoutUseCase>(SignoutUseCase());
   sl.registerSingleton<GetCategoriesUseCase>(GetCategoriesUseCase());
   sl.registerSingleton<GetTopSellingUseCase>(GetTopSellingUseCase());
+  sl.registerSingleton<GetNewInUseCase>(GetNewInUseCase());
 }

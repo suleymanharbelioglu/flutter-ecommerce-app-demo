@@ -25,7 +25,44 @@ class ProductRepositoryImpl extends ProductRepository {
   @override
   Future<Either> getNewIn() async {
     var returnedData = await sl<ProductFirebaseService>().getNewIn();
-   return returnedData.fold(
+    return returnedData.fold(
+      (error) {
+        return Left(error);
+      },
+      (data) {
+        return Right(
+          List.from(
+            data,
+          ).map((e) => ProductModel.fromMap(e).toEntity()).toList(),
+        );
+      },
+    );
+  }
+
+  @override
+  Future<Either> getProductByCategoryId(String categoryId) async {
+    var returnedData = await sl<ProductFirebaseService>()
+        .getProductByCategoryId(categoryId);
+    return returnedData.fold(
+      (error) {
+        return Left(error);
+      },
+      (data) {
+        return Right(
+          List.from(
+            data,
+          ).map((e) => ProductModel.fromMap(e).toEntity()).toList(),
+        );
+      },
+    );
+  }
+
+  @override
+  Future<Either> getProductsByTitle(String title) async {
+    var returnedData = await sl<ProductFirebaseService>().getProductsByTitle(
+      title,
+    );
+    return returnedData.fold(
       (error) {
         return Left(error);
       },

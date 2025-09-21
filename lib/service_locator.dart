@@ -16,6 +16,8 @@ import 'package:flutter_ecommerce_app/domain/category/repository/category_reposi
 import 'package:flutter_ecommerce_app/domain/category/usecases/get_categories.dart';
 import 'package:flutter_ecommerce_app/domain/product/repository/product.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_new_in.dart';
+import 'package:flutter_ecommerce_app/domain/product/usecases/get_product_by_category_id.dart';
+import 'package:flutter_ecommerce_app/domain/product/usecases/get_products_by_title.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_top_selling.dart';
 import 'package:get_it/get_it.dart';
 
@@ -53,4 +55,8 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetCategoriesUseCase>(GetCategoriesUseCase());
   sl.registerSingleton<GetTopSellingUseCase>(GetTopSellingUseCase());
   sl.registerSingleton<GetNewInUseCase>(GetNewInUseCase());
+  sl.registerSingleton<GetProductByCategoryIdUseCase>(
+    GetProductByCategoryIdUseCase(),
+  );
+  sl.registerSingleton<GetProductsByTitleUseCase>(GetProductsByTitleUseCase());
 }

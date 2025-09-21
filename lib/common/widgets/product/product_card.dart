@@ -33,6 +33,7 @@ class ProductCard extends StatelessWidget {
                     topRight: Radius.circular(8),
                   ),
                   image: DecorationImage(
+                    fit: BoxFit.cover,
                     image: NetworkImage(
                       ImageDisplayHelper.generateProductImageURL(
                         productEntity.images[0],

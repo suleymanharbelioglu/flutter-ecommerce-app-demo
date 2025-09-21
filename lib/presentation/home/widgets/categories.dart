@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/common/bloc/category/categories_display_cubit.dart';
 import 'package:flutter_ecommerce_app/common/bloc/category/categories_display_state.dart';
 import 'package:flutter_ecommerce_app/common/helper/images/image_display.dart';
+import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
 import 'package:flutter_ecommerce_app/domain/category/entity/category.dart';
+import 'package:flutter_ecommerce_app/presentation/all_categories/pages/all_categories.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});
@@ -44,7 +46,7 @@ class Categories extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              // All Categories Page
+              AppNavigator.push(context, AllCategoriesPage());
             },
             child: Text(
               "See All",
@@ -73,7 +75,7 @@ class Categories extends StatelessWidget {
                   shape: BoxShape.circle,
                   color: Colors.white,
                   image: DecorationImage(
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover,
                     image: NetworkImage(
                       ImageDisplayHelper.generateCategoryImageURL(
                         categories[index].image,

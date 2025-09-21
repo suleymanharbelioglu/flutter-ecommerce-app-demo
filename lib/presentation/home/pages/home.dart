@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: 24),
             TopSelling(),
             SizedBox(height: 24),
-            // NewIn(),
+            NewIn(),
           ],
         ),
       ),

@@ -36,7 +36,7 @@ class NewIn extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return ProductCard();
+          // return ProductCard();
         },
         separatorBuilder: (context, index) {
           return SizedBox(width: 10);

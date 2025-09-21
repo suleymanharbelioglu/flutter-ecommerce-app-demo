@@ -5,7 +5,8 @@ import 'package:flutter_ecommerce_app/core/usecase/usecase.dart';
 
 class ProductsDisplayCubit extends Cubit<ProductDisplayState> {
   final UseCase useCase;
-  ProductsDisplayCubit(  {required this.useCase}) : super(ProductsInitialState());
+  ProductsDisplayCubit({required this.useCase}) : super(ProductsInitialState());
+
   Future<void> displayProducts({dynamic params}) async {
     emit(ProductsLoading());
     Either returnedData = await useCase.call(params: params);
@@ -18,5 +19,8 @@ class ProductsDisplayCubit extends Cubit<ProductDisplayState> {
         emit(ProductsLoaded(products: data));
       },
     );
+  }
+  void displayInitial(){
+    emit(ProductsInitialState());
   }
 }

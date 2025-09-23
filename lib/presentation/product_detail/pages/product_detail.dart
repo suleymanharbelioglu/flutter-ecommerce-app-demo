@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/domain/product/entity/product.dart';
+import 'package:flutter_ecommerce_app/presentation/product_detail/bloc/favorite_icon_cubit.dart';
+import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/favorite_button.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductEntity productEntity;
@@ -8,6 +11,25 @@ class ProductDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: BasicAppbar(hideBack: false));
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              FavoriteIconCubit()..isFavorite(productEntity.productId),
+        ),
+      ],
+      child: Scaffold(
+        appBar: BasicAppbar(
+          hideBack: false,
+          action: FavoriteButton(productEntity: productEntity),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [],
+          ),
+        ),
+      ),
+    );
   }
 }

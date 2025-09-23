@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/domain/product/entity/product.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/bloc/favorite_icon_cubit.dart';
+import 'package:flutter_ecommerce_app/presentation/product_detail/bloc/product_size_selection_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/favorite_button.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/product_image.dart';
+import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/product_price.dart';
+import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/product_title.dart';
+import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/selected_size.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductEntity productEntity;
@@ -18,6 +22,7 @@ class ProductDetailPage extends StatelessWidget {
           create: (context) =>
               FavoriteIconCubit()..isFavorite(productEntity.productId),
         ),
+        BlocProvider(create: (context) => ProductSizeSelectionCubit()),
       ],
       child: Scaffold(
         appBar: BasicAppbar(
@@ -27,7 +32,15 @@ class ProductDetailPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [ProductImage(productEntity: productEntity)],
+            children: [
+              ProductImage(productEntity: productEntity),
+              SizedBox(height: 10),
+              ProductTitle(productEntity: productEntity),
+              SizedBox(height: 10),
+              ProductPrice(productEntity: productEntity),
+              SizedBox(height: 10),
+              SelectedSize(productEntity: productEntity),
+            ],
           ),
         ),
       ),

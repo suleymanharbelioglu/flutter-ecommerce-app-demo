@@ -18,6 +18,8 @@ import 'package:flutter_ecommerce_app/domain/category/repository/category_reposi
 import 'package:flutter_ecommerce_app/domain/category/usecases/get_categories.dart';
 import 'package:flutter_ecommerce_app/domain/order/repository/order.dart';
 import 'package:flutter_ecommerce_app/domain/order/usecases/add_to_cart.dart';
+import 'package:flutter_ecommerce_app/domain/order/usecases/get_cart_products.dart';
+import 'package:flutter_ecommerce_app/domain/order/usecases/remove_cart_product.dart';
 import 'package:flutter_ecommerce_app/domain/product/repository/product.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/add_or_remove_favorite_product.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_new_in.dart';
@@ -72,4 +74,6 @@ Future<void> initializeDependencies() async {
   );
   sl.registerSingleton<IsFavoriteUseCase>(IsFavoriteUseCase());
   sl.registerSingleton<AddToCartUseCase>(AddToCartUseCase());
+  sl.registerSingleton<GetCartProductsUseCase>(GetCartProductsUseCase());
+  sl.registerSingleton<RemoveCartProductUseCase>(RemoveCartProductUseCase());
 }

@@ -31,7 +31,7 @@ class AddToCartReq {
       "productPrice": productPrice,
       "totalPrice": totalPrice,
       "productImage": productImage,
-      "cretedData": createdDate,
+      "createdDate": createdDate,
     };
   }
 }

@@ -5,6 +5,8 @@ import 'package:flutter_ecommerce_app/data/order/model/add_to_cart_req.dart';
 
 abstract class OrderFirebaseService {
   Future<Either> addToCart(AddToCartReq addToCartReq);
+  Future<Either> getCartProducts();
+  Future<Either> removeCartProduct(String id);
 }
 
 class OrderFirebaseServiceImpl extends OrderFirebaseService {
@@ -18,6 +20,43 @@ class OrderFirebaseServiceImpl extends OrderFirebaseService {
           .collection("Cart")
           .add(addToCartReq.toMap());
       return Right("Add to cart was successfully");
+    } catch (e) {
+      return Left("Please try again");
+    }
+  }
+
+  @override
+  Future<Either> getCartProducts() async {
+    try {
+      var user = FirebaseAuth.instance.currentUser;
+      var returnedData = await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(user!.uid)
+          .collection("Cart")
+          .get();
+      List<Map> products = [];
+      for (var item in returnedData.docs) {
+        var data = item.data();
+        data.addAll({"id": item.id});
+        products.add(data);
+      }
+      return Right(products);
+    } catch (e) {
+      return Left("Please try again");
+    }
+  }
+
+  @override
+  Future<Either> removeCartProduct(String id) async {
+    try {
+      var user = FirebaseAuth.instance.currentUser;
+      await FirebaseFirestore.instance
+          .collection("Users")
+          .doc(user!.uid)
+          .collection("Cart")
+          .doc(id)
+          .delete();
+      return Right("Product removed successfully");
     } catch (e) {
       return Left("Please try again");
     }

@@ -122,13 +122,10 @@ class AuthFirebaseServiceImpl extends AuthFirebaseService {
     try {
       await FirebaseAuth.instance.signOut();
 
-      // İşlem başarılı olursa, Right ile bir başarı durumu döndür
       return const Right(null);
     } on FirebaseAuthException catch (e) {
-      // Oturum kapatma sırasında oluşabilecek Firebase hatalarını yakala
       return const Left('Oturum kapatılırken bir hata oluştu.');
     } catch (e) {
-      // Diğer bilinmeyen hataları yakala
       return const Left('Bilinmeyen bir hata oluştu.');
     }
   }

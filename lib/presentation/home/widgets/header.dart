@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
 import 'package:flutter_ecommerce_app/core/configs/assets/app_images.dart';
 import 'package:flutter_ecommerce_app/core/configs/assets/app_vectors.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/domain/auth/entity/user.dart';
+import 'package:flutter_ecommerce_app/presentation/cart/pages/cart.dart';
 import 'package:flutter_ecommerce_app/presentation/home/bloc/user_info_display_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/home/bloc/user_info_display_state.dart';
+import 'package:flutter_ecommerce_app/presentation/settings/pages/settings.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Header extends StatelessWidget {
@@ -42,7 +45,7 @@ class Header extends StatelessWidget {
   _profileImage(UserEntity user, BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // go to settings page
+        AppNavigator.push(context, SettingsPage());
       },
       child: Container(
         height: 40,
@@ -80,7 +83,7 @@ class Header extends StatelessWidget {
   _card(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // go to cart page
+        AppNavigator.push(context, CartPage());
       },
       child: Container(
         height: 40,

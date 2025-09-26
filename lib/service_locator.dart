@@ -24,6 +24,7 @@ import 'package:flutter_ecommerce_app/domain/order/usecases/order_registration.d
 import 'package:flutter_ecommerce_app/domain/order/usecases/remove_cart_product.dart';
 import 'package:flutter_ecommerce_app/domain/product/repository/product.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/add_or_remove_favorite_product.dart';
+import 'package:flutter_ecommerce_app/domain/product/usecases/get_favorites_products.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_new_in.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_product_by_category_id.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_products_by_title.dart';
@@ -80,4 +81,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<RemoveCartProductUseCase>(RemoveCartProductUseCase());
   sl.registerSingleton<OrderRegistrationUseCase>(OrderRegistrationUseCase());
   sl.registerSingleton<GetOrdersUseCase>(GetOrdersUseCase());
+  sl.registerSingleton<GetFavoritesProductsUseCase>(
+    GetFavoritesProductsUseCase(),
+  );
 }

@@ -23,7 +23,7 @@ class OrderModel {
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       products: List<ProductOrderedModel>.from(
-        map["product"].map((e) => ProductOrderedModel.fromMap(e)),
+        map["products"].map((e) => ProductOrderedModel.fromMap(e)),
       ),
       createdDate: map["createdDate"] as String,
       shippingAddress: map["shippingAddress"] as String,

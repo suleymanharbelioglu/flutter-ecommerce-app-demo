@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce_app/common/bloc/button/button_cubit.dart';
 import 'package:flutter_ecommerce_app/common/bloc/button/button_state.dart';
 import 'package:flutter_ecommerce_app/common/helper/cart/cart.dart';
 import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
+import 'package:flutter_ecommerce_app/common/helper/order/order.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/common/widgets/button/basic_reactive_button.dart';
 import 'package:flutter_ecommerce_app/data/order/model/order_registration_req.dart';
@@ -56,6 +57,9 @@ class CheckaoutPage extends StatelessWidget {
                             totalPrice: CartHelper.calculateCartSubtotal(
                               products,
                             ),
+                            code: OrdeHelper.createOrderCode(),
+                            orderStatus:
+                                OrdeHelper.randomOrderStatusListCreater(),
                           ),
                         );
                       },

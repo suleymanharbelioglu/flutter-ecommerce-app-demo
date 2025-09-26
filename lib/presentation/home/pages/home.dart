@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/presentation/home/widgets/categories.dart';
 import 'package:flutter_ecommerce_app/presentation/home/widgets/header.dart';
 import 'package:flutter_ecommerce_app/presentation/home/widgets/new_in.dart';
@@ -12,18 +13,21 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Header(),
-            SizedBox(height: 24),
-            SearchField(),
-            SizedBox(height: 24),
-            Categories(),
-            SizedBox(height: 24),
-            TopSelling(),
-            SizedBox(height: 24),
-            NewIn(),
-          ],
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w), // responsive padding
+          child: Column(
+            children: [
+              Header(),
+              SizedBox(height: 24.h),
+              SearchField(),
+              SizedBox(height: 24.h),
+              Categories(),
+              SizedBox(height: 24.h),
+              TopSelling(),
+              SizedBox(height: 24.h),
+              NewIn(),
+            ],
+          ),
         ),
       ),
     );

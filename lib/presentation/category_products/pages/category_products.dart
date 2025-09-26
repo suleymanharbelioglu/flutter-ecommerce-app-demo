@@ -8,6 +8,7 @@ import 'package:flutter_ecommerce_app/domain/category/entity/category.dart';
 import 'package:flutter_ecommerce_app/domain/product/entity/product.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_product_by_category_id.dart';
 import 'package:flutter_ecommerce_app/service_locator.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CategoryProductsPage extends StatelessWidget {
   final CategoryEntity categoryEntity;
@@ -28,13 +29,13 @@ class CategoryProductsPage extends StatelessWidget {
             }
             if (state is ProductsLoaded) {
               return Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _categoryInfo(state.products),
-                    SizedBox(height: 10),
-                    _products(state.products),
+                    SizedBox(height: 10.h),
+                    Expanded(child: _products(state.products)),
                   ],
                 ),
               );
@@ -46,27 +47,25 @@ class CategoryProductsPage extends StatelessWidget {
     );
   }
 
-  _categoryInfo(List<ProductEntity> products) {
+  Widget _categoryInfo(List<ProductEntity> products) {
     return Text(
       "${categoryEntity.title} (${products.length})",
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
     );
   }
 
-  _products(List<ProductEntity> products) {
-    return Expanded(
-      child: GridView.builder(
-        itemCount: products.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          childAspectRatio: 0.6,
-        ),
-        itemBuilder: (context, index) {
-          return ProductCard(productEntity: products[index]);
-        },
+  Widget _products(List<ProductEntity> products) {
+    return GridView.builder(
+      itemCount: products.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10.w,
+        mainAxisSpacing: 10.h,
+        childAspectRatio: 0.6,
       ),
+      itemBuilder: (context, index) {
+        return ProductCard(productEntity: products[index]);
+      },
     );
   }
 }

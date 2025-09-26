@@ -10,6 +10,7 @@ import 'package:flutter_ecommerce_app/domain/product/usecases/get_products_by_ti
 import 'package:flutter_ecommerce_app/presentation/search/widgets/search_field.dart';
 import 'package:flutter_ecommerce_app/service_locator.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -20,7 +21,11 @@ class SearchPage extends StatelessWidget {
       create: (context) =>
           ProductsDisplayCubit(useCase: sl<GetProductsByTitleUseCase>()),
       child: Scaffold(
-        appBar: BasicAppbar(hideBack: false, height: 80, title: SearchField()),
+        appBar: BasicAppbar(
+          hideBack: false,
+          height: 80.h,
+          title: SearchField(),
+        ),
         body: BlocBuilder<ProductsDisplayCubit, ProductDisplayState>(
           builder: (context, state) {
             if (state is ProductsLoading) {
@@ -42,13 +47,13 @@ class SearchPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SvgPicture.asset(AppVectors.notFound),
+        SvgPicture.asset(AppVectors.notFound, width: 150.w, height: 150.h),
         Padding(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.w),
           child: Text(
-            "Sorry, we couldn't find any macthing result for your Search",
+            "Sorry, we couldn't find any matching result for your search",
             textAlign: TextAlign.center,
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.sp),
           ),
         ),
       ],
@@ -58,11 +63,11 @@ class SearchPage extends StatelessWidget {
   Widget _products(List<ProductEntity> products) {
     return GridView.builder(
       itemCount: products.length,
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
+        crossAxisSpacing: 10.w,
+        mainAxisSpacing: 10.h,
         childAspectRatio: 0.6,
       ),
       itemBuilder: (context, index) {

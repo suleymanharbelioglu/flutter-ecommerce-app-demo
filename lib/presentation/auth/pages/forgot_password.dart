@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/common/bloc/button/button_cubit.dart';
 import 'package:flutter_ecommerce_app/common/bloc/button/button_state.dart';
 import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
@@ -19,33 +20,36 @@ class ForgotPasswordPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const BasicAppbar(hideBack: false),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
-        child: BlocProvider(
-          create: (context) => ButtonStateCubit(),
-          child: BlocListener<ButtonStateCubit, ButtonState>(
-            listener: (context, state) {
-              if (state is ButtonFailureState) {
-                var snackbar = SnackBar(
-                  content: Text(state.errorMessage),
-                  behavior: SnackBarBehavior.floating,
-                );
-                ScaffoldMessenger.of(context).showSnackBar(snackbar);
-              }
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 40.h),
+          child: BlocProvider(
+            create: (context) => ButtonStateCubit(),
+            child: BlocListener<ButtonStateCubit, ButtonState>(
+              listener: (context, state) {
+                if (state is ButtonFailureState) {
+                  var snackbar = SnackBar(
+                    content: Text(state.errorMessage),
+                    behavior: SnackBarBehavior.floating,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                }
 
-              if (state is ButtonSuccessState) {
-                AppNavigator.push(context, const PasswordResetEmailPage());
-              }
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _siginText(),
-                const SizedBox(height: 20),
-                _emailField(),
-                const SizedBox(height: 20),
-                _continueButton(),
-              ],
+                if (state is ButtonSuccessState) {
+                  AppNavigator.push(context, const PasswordResetEmailPage());
+                }
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _siginText(),
+                  SizedBox(height: 20.h),
+                  _emailField(),
+                  SizedBox(height: 20.h),
+                  _continueButton(),
+                ],
+              ),
             ),
           ),
         ),
@@ -54,16 +58,23 @@ class ForgotPasswordPage extends StatelessWidget {
   }
 
   Widget _siginText() {
-    return const Text(
+    return Text(
       'Forgot Password',
-      style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+      style: TextStyle(
+        fontSize: 32.sp, // responsive font
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 
   Widget _emailField() {
     return TextField(
       controller: _emailCon,
-      decoration: const InputDecoration(hintText: 'Enter Email'),
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        hintText: 'Enter Email',
+        contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+      ),
     );
   }
 

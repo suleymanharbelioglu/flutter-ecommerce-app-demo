@@ -12,6 +12,7 @@ import 'package:flutter_ecommerce_app/presentation/cart/pages/cart.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/bloc/product_color_selection_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/bloc/product_quantity_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/bloc/product_size_selection_cubit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddToBag extends StatelessWidget {
   final ProductEntity productEntity;
@@ -33,7 +34,7 @@ class AddToBag extends StatelessWidget {
         }
       },
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         child: BasicReactiveButton(
           onPressed: () {
             context.read<ButtonStateCubit>().execute(
@@ -47,13 +48,10 @@ class AddToBag extends StatelessWidget {
                         .read<ProductColorSelectionCubit>()
                         .selectedIndex]
                     .title,
-                productSize:
-                    productEntity.sizes[context
-                        .read<ProductSizeSelectionCubit>()
-                        .selectedIndex],
+                productSize: productEntity
+                    .sizes[context.read<ProductSizeSelectionCubit>().selectedIndex],
                 productPrice: productEntity.price.toDouble(),
-                totalPrice:
-                    ProductPriceHelper.provideCurrentPrice(productEntity) *
+                totalPrice: ProductPriceHelper.provideCurrentPrice(productEntity) *
                     context.read<ProductQuantityCubit>().state,
                 productImage: productEntity.images[0],
                 createdDate: DateTime.now().toString(),
@@ -67,23 +65,23 @@ class AddToBag extends StatelessWidget {
                 builder: (context, state) {
                   var price =
                       ProductPriceHelper.provideCurrentPrice(productEntity) *
-                      state;
+                          state;
                   return Text(
                     "\$${price.toString()}",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: 14.sp,
                     ),
                   );
                 },
               ),
               Text(
-                "Add to Bag ",
+                "Add to Bag",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   color: Colors.white,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
               ),
             ],

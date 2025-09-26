@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/common/helper/images/image_display.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/domain/order/entity/product_ordered.dart';
@@ -10,11 +11,11 @@ class OrderItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      padding: EdgeInsets.all(8),
+      height: 100.h,
+      padding: EdgeInsets.all(8.w),
       decoration: BoxDecoration(
         color: AppColors.secondBackground,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,7 +29,7 @@ class OrderItemCard extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Container(
-                    width: 90,
+                    width: 90.w,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       image: DecorationImage(
@@ -39,11 +40,11 @@ class OrderItemCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(4.r),
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 10.w),
                 Expanded(
                   flex: 6,
                   child: Column(
@@ -55,7 +56,7 @@ class OrderItemCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                       Row(
@@ -64,40 +65,40 @@ class OrderItemCard extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             TextSpan(
                               text: 'Size - ',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 10,
+                                fontSize: 10.sp,
                               ),
                               children: [
                                 TextSpan(
                                   text: productOrderedEntity.productSize,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 10,
+                                    fontSize: 10.sp,
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          const SizedBox(width: 10),
+                          SizedBox(width: 10.w),
                           Text.rich(
                             overflow: TextOverflow.ellipsis,
                             TextSpan(
                               text: 'Color - ',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w500,
-                                fontSize: 10,
+                                fontSize: 10.sp,
                               ),
                               children: [
                                 TextSpan(
                                   text: productOrderedEntity.productColor,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 10,
+                                    fontSize: 10.sp,
                                   ),
                                 ),
                               ],
@@ -113,7 +114,7 @@ class OrderItemCard extends StatelessWidget {
           ),
           Text(
             '\$${productOrderedEntity.totalPrice}',
-            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp),
           ),
         ],
       ),

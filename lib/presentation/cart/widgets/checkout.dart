@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/common/helper/cart/cart.dart';
 import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
 import 'package:flutter_ecommerce_app/common/widgets/button/basic_app_button.dart';
@@ -13,66 +14,51 @@ class Checkout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       height: MediaQuery.of(context).size.height / 3.5,
       color: AppColors.background,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Subtotal",
-                style: TextStyle(color: Colors.grey, fontSize: 16),
-              ),
-              Text(
-                "\$${CartHelper.calculateCartSubtotal(products).toString()}",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ],
+          _rowItem(
+            "Subtotal",
+            "\$${CartHelper.calculateCartSubtotal(products)}",
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Shipping Cost",
-                style: TextStyle(color: Colors.grey, fontSize: 16),
-              ),
-              Text(
-                "\$8",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Tax', style: TextStyle(color: Colors.grey, fontSize: 16)),
-              Text(
-                '\$0.0',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Total', style: TextStyle(color: Colors.grey, fontSize: 16)),
-              Text(
-                '\$${CartHelper.calculateCartSubtotal(products) + 8}',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-            ],
+          _rowItem("Shipping Cost", "\$8"),
+          _rowItem("Tax", "\$0.0"),
+          _rowItem(
+            "Total",
+            "\$${CartHelper.calculateCartSubtotal(products) + 8}",
+            isBold: true,
           ),
           BasicAppButton(
             onPressed: () {
               AppNavigator.push(context, CheckaoutPage(products: products));
             },
             title: "Checkout",
+            width: double.infinity,
           ),
         ],
       ),
+    );
+  }
+
+  Widget _rowItem(String title, String value, {bool isBold = false}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: TextStyle(color: Colors.grey, fontSize: 16.sp),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: isBold ? FontWeight.bold : FontWeight.w400,
+            fontSize: 16.sp,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce_app/common/widgets/button/basic_app_button.dar
 import 'package:flutter_ecommerce_app/core/configs/assets/app_vectors.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/pages/signin.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PasswordResetEmailPage extends StatelessWidget {
   const PasswordResetEmailPage({super.key});
@@ -11,26 +12,39 @@ class PasswordResetEmailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _emailSending(),
-          const SizedBox(height: 30),
-          _sentEmail(),
-          const SizedBox(height: 30),
-          _returnToLoginButton(context),
-        ],
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _emailSending(),
+            SizedBox(height: 30.h),
+            _sentEmail(),
+            SizedBox(height: 30.h),
+            _returnToLoginButton(context),
+          ],
+        ),
       ),
     );
   }
 
   Widget _emailSending() {
-    return Center(child: SvgPicture.asset(AppVectors.emailSending));
+    return Center(
+      child: SvgPicture.asset(
+        AppVectors.emailSending,
+        width: 150.w,
+        height: 150.h,
+      ),
+    );
   }
 
   Widget _sentEmail() {
-    return const Center(
-      child: Text('We Sent you an Email to reset your password.'),
+    return Center(
+      child: Text(
+        'We Sent you an Email to reset your password.',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 16.sp),
+      ),
     );
   }
 
@@ -39,7 +53,7 @@ class PasswordResetEmailPage extends StatelessWidget {
       onPressed: () {
         AppNavigator.pushReplacement(context, SigninPage());
       },
-      width: 200,
+      width: 200.w,
       title: 'Return to Login',
     );
   }

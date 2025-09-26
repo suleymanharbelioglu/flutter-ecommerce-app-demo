@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/core/configs/assets/app_vectors.dart';
 import 'package:flutter_ecommerce_app/domain/order/entity/product_ordered.dart';
@@ -15,7 +16,13 @@ class CartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BasicAppbar(hideBack: false, title: Text("Cart")),
+      appBar: BasicAppbar(
+        hideBack: false,
+        title: Text(
+          "Cart",
+          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+        ),
+      ),
       body: BlocProvider(
         create: (context) => CartProductsDisplayCubit()..displayCartProducts(),
         child: BlocBuilder<CartProductsDisplayCubit, CartProductsDiplayState>(
@@ -43,16 +50,16 @@ class CartPage extends StatelessWidget {
     );
   }
 
-  _cartIsEmpty() {
+  Widget _cartIsEmpty() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SvgPicture.asset(AppVectors.cartBag),
-        SizedBox(height: 20),
+        SvgPicture.asset(AppVectors.cartBag, width: 100.w, height: 100.h),
+        SizedBox(height: 20.h),
         Text(
           "Cart is empty",
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20.sp),
         ),
       ],
     );
@@ -60,12 +67,12 @@ class CartPage extends StatelessWidget {
 
   Widget _products(List<ProductOrderedEntity> products) {
     return ListView.separated(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
       itemBuilder: (context, index) {
         return ProductOrderedCard(productOrderedEntity: products[index]);
       },
       separatorBuilder: (context, index) {
-        return SizedBox(height: 10);
+        return SizedBox(height: 10.h);
       },
       itemCount: products.length,
     );

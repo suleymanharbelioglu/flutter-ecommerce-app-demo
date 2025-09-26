@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce_app/domain/order/entity/order.dart';
 import 'package:flutter_ecommerce_app/presentation/settings/bloc/orders_display_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/settings/bloc/orders_display_state.dart';
 import 'package:flutter_ecommerce_app/presentation/settings/pages/order_detail.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyOrdersPage extends StatelessWidget {
   const MyOrdersPage({super.key});
@@ -14,7 +15,13 @@ class MyOrdersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BasicAppbar(hideBack: false, title: Text("My Orders")),
+      appBar: BasicAppbar(
+        hideBack: false,
+        title: Text(
+          "My Orders",
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+        ),
+      ),
       body: BlocProvider(
         create: (context) => OrdersDisplayCubit()..displayOrders(),
         child: BlocBuilder<OrdersDisplayCubit, OrdersDisplayState>(
@@ -26,7 +33,12 @@ class MyOrdersPage extends StatelessWidget {
               return _orders(state.orders);
             }
             if (state is LoadOrdersFailure) {
-              return Center(child: Text(state.errorMessage));
+              return Center(
+                child: Text(
+                  state.errorMessage,
+                  style: TextStyle(fontSize: 16.sp),
+                ),
+              );
             }
             return Container();
           },
@@ -35,10 +47,11 @@ class MyOrdersPage extends StatelessWidget {
     );
   }
 
-  _orders(List<OrderEntity> orders) {
+  Widget _orders(List<OrderEntity> orders) {
     return ListView.separated(
-      padding: const EdgeInsets.all(16),
-
+      padding: EdgeInsets.all(16.w),
+      itemCount: orders.length,
+      separatorBuilder: (context, index) => SizedBox(height: 20.h),
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
@@ -48,19 +61,19 @@ class MyOrdersPage extends StatelessWidget {
             );
           },
           child: Container(
-            height: 70,
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            height: 70.h,
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             decoration: BoxDecoration(
               color: AppColors.secondBackground,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(Icons.receipt_rounded),
-                    SizedBox(width: 20),
+                    Icon(Icons.receipt_rounded, size: 24.sp),
+                    SizedBox(width: 20.w),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,14 +82,14 @@ class MyOrdersPage extends StatelessWidget {
                           "Order #${orders[index].code}",
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize: 16,
+                            fontSize: 16.sp,
                           ),
                         ),
                         Text(
                           "${orders[index].products.length} item",
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             color: Colors.grey,
                           ),
                         ),
@@ -84,16 +97,12 @@ class MyOrdersPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Icon(Icons.arrow_forward_ios_rounded),
+                Icon(Icons.arrow_forward_ios_rounded, size: 20.sp),
               ],
             ),
           ),
         );
       },
-      separatorBuilder: (context, index) {
-        return SizedBox(height: 20);
-      },
-      itemCount: orders.length,
     );
   }
 }

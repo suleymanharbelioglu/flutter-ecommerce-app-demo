@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/common/helper/images/image_display.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/domain/order/entity/product_ordered.dart';
@@ -12,11 +13,11 @@ class ProductOrderedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      padding: EdgeInsets.all(8),
+      height: 100.h,
+      padding: EdgeInsets.all(8.w),
       decoration: BoxDecoration(
         color: AppColors.secondBackground,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,7 +31,7 @@ class ProductOrderedCard extends StatelessWidget {
                 Expanded(
                   flex: 3,
                   child: Container(
-                    width: 90,
+                    width: 90.w,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       image: DecorationImage(
@@ -39,12 +40,13 @@ class ProductOrderedCard extends StatelessWidget {
                             productOrderedEntity.productImage,
                           ),
                         ),
+                        fit: BoxFit.cover,
                       ),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: BorderRadius.circular(4.r),
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                SizedBox(width: 10.w),
                 Expanded(
                   flex: 6,
                   child: Column(
@@ -56,53 +58,19 @@ class ProductOrderedCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
-                          fontSize: 16,
+                          fontSize: 16.sp,
                         ),
                       ),
                       Row(
                         children: [
-                          Text.rich(
-                            overflow: TextOverflow.ellipsis,
-                            TextSpan(
-                              text: "Size - ",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: productOrderedEntity.productSize,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          _textInfo(
+                            title: "Size - ",
+                            value: productOrderedEntity.productSize,
                           ),
-                          SizedBox(width: 10),
-                          Text.rich(
-                            overflow: TextOverflow.ellipsis,
-                            TextSpan(
-                              text: "Color - ",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10,
-                              ),
-                              children: [
-                                TextSpan(
-                                  text: productOrderedEntity.productColor,
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 10,
-                                  ),
-                                ),
-                              ],
-                            ),
+                          SizedBox(width: 10.w),
+                          _textInfo(
+                            title: "Color - ",
+                            value: productOrderedEntity.productColor,
                           ),
                         ],
                       ),
@@ -119,7 +87,10 @@ class ProductOrderedCard extends StatelessWidget {
               children: [
                 Text(
                   "\$${productOrderedEntity.totalPrice}",
-                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                  ),
                 ),
                 GestureDetector(
                   onTap: () {
@@ -128,16 +99,39 @@ class ProductOrderedCard extends StatelessWidget {
                     );
                   },
                   child: Container(
-                    height: 23,
-                    width: 23,
+                    height: 23.h,
+                    width: 23.w,
                     decoration: BoxDecoration(
                       color: Color(0xffFF8383),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.remove, size: 15),
+                    child: Icon(Icons.remove, size: 15.sp),
                   ),
                 ),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _textInfo({required String title, required String value}) {
+    return Text.rich(
+      TextSpan(
+        text: title,
+        style: TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.w500,
+          fontSize: 10.sp,
+        ),
+        children: [
+          TextSpan(
+            text: value,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w500,
+              fontSize: 10.sp,
             ),
           ),
         ],

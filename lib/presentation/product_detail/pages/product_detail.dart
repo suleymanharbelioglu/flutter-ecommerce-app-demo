@@ -15,6 +15,7 @@ import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/produc
 import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/product_title.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/selected_color.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/widgets/selected_size.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductEntity productEntity;
@@ -40,21 +41,24 @@ class ProductDetailPage extends StatelessWidget {
         ),
         bottomNavigationBar: AddToBag(productEntity: productEntity),
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ProductImage(productEntity: productEntity),
-              SizedBox(height: 10),
-              ProductTitle(productEntity: productEntity),
-              SizedBox(height: 10),
-              ProductPrice(productEntity: productEntity),
-              SizedBox(height: 20),
-              SelectedSize(productEntity: productEntity),
-              SizedBox(height: 15),
-              SelectedColor(productEntity: productEntity),
-              SizedBox(height: 15),
-              ProductQuantity(productEntity: productEntity),
-            ],
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ProductImage(productEntity: productEntity),
+                SizedBox(height: 10.h),
+                ProductTitle(productEntity: productEntity),
+                SizedBox(height: 10.h),
+                ProductPrice(productEntity: productEntity),
+                SizedBox(height: 20.h),
+                SelectedSize(productEntity: productEntity),
+                SizedBox(height: 15.h),
+                SelectedColor(productEntity: productEntity),
+                SizedBox(height: 15.h),
+                ProductQuantity(productEntity: productEntity),
+              ],
+            ),
           ),
         ),
       ),

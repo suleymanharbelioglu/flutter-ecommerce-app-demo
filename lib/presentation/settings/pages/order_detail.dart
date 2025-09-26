@@ -4,6 +4,7 @@ import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/domain/order/entity/order.dart';
 import 'package:flutter_ecommerce_app/presentation/settings/pages/order_items.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class OrderDetailPage extends StatelessWidget {
   final OrderEntity orderEntity;
@@ -14,17 +15,20 @@ class OrderDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: BasicAppbar(
         hideBack: false,
-        title: Text("Order ${orderEntity.code}"),
+        title: Text(
+          "Order ${orderEntity.code}",
+          style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _status(),
-            SizedBox(height: 50),
+            SizedBox(height: 50.h),
             _items(context),
-            SizedBox(height: 30),
+            SizedBox(height: 30.h),
             _shipping(),
           ],
         ),
@@ -32,75 +36,63 @@ class OrderDetailPage extends StatelessWidget {
     );
   }
 
-  _status() {
+  Widget _status() {
     return ListView.separated(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       reverse: true,
+      itemCount: orderEntity.orderStatus.length,
+      separatorBuilder: (context, index) => SizedBox(height: 10.h),
       itemBuilder: (context, index) {
+        final status = orderEntity.orderStatus[index];
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
                 Container(
-                  height: 30,
-                  width: 30,
+                  height: 30.h,
+                  width: 30.w,
                   decoration: BoxDecoration(
-                    color: orderEntity.orderStatus[index].done
-                        ? AppColors.primary
-                        : Colors.white,
+                    color: status.done ? AppColors.primary : Colors.white,
                     shape: BoxShape.circle,
                   ),
-                  child: orderEntity.orderStatus[index].done
-                      ? Icon(Icons.check)
-                      : Container(),
+                  child: status.done ? Icon(Icons.check, size: 18.sp) : null,
                 ),
-                SizedBox(width: 15),
+                SizedBox(width: 15.w),
                 Text(
-                  orderEntity.orderStatus[index].title,
+                  status.title,
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    color: orderEntity.orderStatus[index].done
-                        ? Colors.white
-                        : Colors.grey,
+                    fontSize: 16.sp,
+                    color: status.done ? Colors.white : Colors.grey,
                   ),
                 ),
               ],
             ),
             Text(
-              orderEntity.orderStatus[index].createdDate
-                  .toDate()
-                  .toString()
-                  .split(' ')[0],
+              status.createdDate.toDate().toString().split(' ')[0],
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                fontSize: 14,
-                color: orderEntity.orderStatus[index].done
-                    ? Colors.white
-                    : Colors.grey,
+                fontSize: 14.sp,
+                color: status.done ? Colors.white : Colors.grey,
               ),
             ),
           ],
         );
       },
-      separatorBuilder: (context, index) {
-        return SizedBox(height: 10);
-      },
-      itemCount: orderEntity.orderStatus.length,
     );
   }
 
-  _items(BuildContext context) {
+  Widget _items(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Order Itmes",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          "Order Items",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
         ),
-        SizedBox(height: 15),
+        SizedBox(height: 15.h),
         GestureDetector(
           onTap: () {
             AppNavigator.push(
@@ -109,24 +101,24 @@ class OrderDetailPage extends StatelessWidget {
             );
           },
           child: Container(
-            height: 70,
-            padding: EdgeInsets.symmetric(horizontal: 16),
+            height: 70.h,
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             decoration: BoxDecoration(
               color: AppColors.secondBackground,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(Icons.receipt_rounded),
-                    SizedBox(width: 20),
+                    Icon(Icons.receipt_rounded, size: 24.sp),
+                    SizedBox(width: 20.w),
                     Text(
                       "${orderEntity.products.length} Items",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        fontSize: 16,
+                        fontSize: 16.sp,
                       ),
                     ),
                   ],
@@ -135,7 +127,7 @@ class OrderDetailPage extends StatelessWidget {
                   "View All",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: AppColors.primary,
                   ),
                 ),
@@ -147,23 +139,26 @@ class OrderDetailPage extends StatelessWidget {
     );
   }
 
-  _shipping() {
+  Widget _shipping() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           "Shipping details",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.sp),
         ),
-        SizedBox(height: 15),
+        SizedBox(height: 15.h),
         Container(
           width: double.infinity,
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.w),
           decoration: BoxDecoration(
             color: AppColors.secondBackground,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10.r),
           ),
-          child: Text(orderEntity.shippingAddress),
+          child: Text(
+            orderEntity.shippingAddress,
+            style: TextStyle(fontSize: 14.sp),
+          ),
         ),
       ],
     );

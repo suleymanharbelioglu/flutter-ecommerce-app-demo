@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BasicAppButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -21,15 +22,19 @@ class BasicAppButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         minimumSize: Size(
-          width ?? MediaQuery.of(context).size.width,
-          height ?? 50,
+          (width ?? MediaQuery.of(context).size.width).w,
+          (height ?? 50).h,
         ),
       ),
       child:
           content ??
           Text(
             title,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+              fontSize: 16.sp,
+            ),
           ),
     );
   }

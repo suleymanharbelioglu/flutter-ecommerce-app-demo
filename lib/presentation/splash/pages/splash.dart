@@ -8,6 +8,7 @@ import 'package:flutter_ecommerce_app/presentation/home/pages/home.dart';
 import 'package:flutter_ecommerce_app/presentation/splash/bloc/splash_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/splash/bloc/splash_state.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
@@ -25,7 +26,13 @@ class SplashPage extends StatelessWidget {
       },
       child: Scaffold(
         backgroundColor: AppColors.primary,
-        body: Center(child: SvgPicture.asset(AppVectors.appLogo)),
+        body: Center(
+          child: SvgPicture.asset(
+            AppVectors.appLogo,
+            width: 150.w, // responsive width
+            height: 150.h, // responsive height
+          ),
+        ),
       ),
     );
   }

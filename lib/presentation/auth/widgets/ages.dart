@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/bloc/age_selection_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/bloc/ages_display_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/auth/bloc/ages_display_state.dart';
@@ -11,22 +12,19 @@ class Ages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 2.7,
+      height:
+          MediaQuery.of(context).size.height / 2.7, // ekranın yaklaşık yarısı
       child: BlocBuilder<AgesDisplayCubit, AgesDisplayState>(
         builder: (context, state) {
           if (state is AgesLoading) {
-            return Container(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
-            );
+            return Center(child: CircularProgressIndicator());
           }
           if (state is AgesLoaded) {
-            return _ages(state.ages);
+            return _ages(context, state.ages);
           }
           if (state is AgesLoadFailure) {
-            return Container(
-              alignment: Alignment.center,
-              child: Text(state.message),
+            return Center(
+              child: Text(state.message, style: TextStyle(fontSize: 16.sp)),
             );
           }
           return SizedBox();
@@ -35,27 +33,27 @@ class Ages extends StatelessWidget {
     );
   }
 
-  Widget _ages(List<QueryDocumentSnapshot<Map<String, dynamic>>> ages) {
+  Widget _ages(
+    BuildContext context,
+    List<QueryDocumentSnapshot<Map<String, dynamic>>> ages,
+  ) {
     return ListView.separated(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.w),
+      itemCount: ages.length,
+      separatorBuilder: (_, __) => SizedBox(height: 20.h),
       itemBuilder: (context, index) {
+        final ageValue = ages[index].data()["value"];
         return GestureDetector(
           onTap: () {
             Navigator.pop(context);
-            context.read<AgeSelectionCubit>().selectAge(
-              ages[index].data()["value"],
-            );
+            context.read<AgeSelectionCubit>().selectAge(ageValue);
           },
-          child: Text(
-            ages[index].data()["value"],
-            style: TextStyle(fontSize: 18),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 10.h),
+            child: Text(ageValue, style: TextStyle(fontSize: 18.sp)),
           ),
         );
       },
-      separatorBuilder: (context, index) {
-        return SizedBox(height: 20);
-      },
-      itemCount: ages.length,
     );
   }
 }

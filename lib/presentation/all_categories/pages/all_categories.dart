@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/common/bloc/category/categories_display_cubit.dart';
 import 'package:flutter_ecommerce_app/common/bloc/category/categories_display_state.dart';
 import 'package:flutter_ecommerce_app/common/helper/images/image_display.dart';
@@ -18,11 +19,11 @@ class AllCategoriesPage extends StatelessWidget {
       body: BlocProvider(
         create: (context) => CategoriesDisplayCubit()..displayCategories(),
         child: Padding(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(16.w),
           child: Column(
             children: [
               _shopByCategories(),
-              SizedBox(height: 10),
+              SizedBox(height: 10.h),
               _categories(),
             ],
           ),
@@ -31,14 +32,14 @@ class AllCategoriesPage extends StatelessWidget {
     );
   }
 
-  _shopByCategories() {
+  Widget _shopByCategories() {
     return Text(
       "Shop by Categories",
-      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22.sp),
     );
   }
 
-  _categories() {
+  Widget _categories() {
     return BlocBuilder<CategoriesDisplayCubit, CategoriesDisplayState>(
       builder: (context, state) {
         if (state is CategoriesLoading) {
@@ -47,28 +48,29 @@ class AllCategoriesPage extends StatelessWidget {
         if (state is CategoriesLoaded) {
           return ListView.separated(
             shrinkWrap: true,
+            itemCount: state.categories.length,
+            separatorBuilder: (_, __) => SizedBox(height: 10.h),
             itemBuilder: (context, index) {
+              final category = state.categories[index];
               return GestureDetector(
                 onTap: () {
                   AppNavigator.push(
                     context,
-                    CategoryProductsPage(
-                      categoryEntity: state.categories[index],
-                    ),
+                    CategoryProductsPage(categoryEntity: category),
                   );
                 },
                 child: Container(
-                  height: 70,
-                  padding: EdgeInsets.all(12),
+                  height: 70.h,
+                  padding: EdgeInsets.all(12.w),
                   decoration: BoxDecoration(
                     color: AppColors.secondBackground,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: Row(
                     children: [
                       Container(
-                        height: 50,
-                        width: 50,
+                        height: 50.h,
+                        width: 50.w,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.circle,
@@ -76,17 +78,17 @@ class AllCategoriesPage extends StatelessWidget {
                             fit: BoxFit.cover,
                             image: NetworkImage(
                               ImageDisplayHelper.generateCategoryImageURL(
-                                state.categories[index].image,
+                                category.image,
                               ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(width: 15),
+                      SizedBox(width: 15.w),
                       Text(
-                        state.categories[index].title,
+                        category.title,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -95,13 +97,9 @@ class AllCategoriesPage extends StatelessWidget {
                 ),
               );
             },
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 10);
-            },
-            itemCount: state.categories.length,
           );
         }
-        return Container();
+        return SizedBox();
       },
     );
   }

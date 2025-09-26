@@ -1,15 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-
- Future<void> addSampleProductsToFirestore() async {
+Future<void> addSampleProductsToFirestore() async {
   final List<Map<String, dynamic>> sampleProducts = [
     // Shorts
     {
       "categoryId": "ucm1ai9BggZTCgKqv4yz",
       "colors": [
-        {"title": "Blue", "rgb": [0, 0, 255]},
-        {"title": "Grey", "rgb": [128, 128, 128]},
+        {
+          "title": "Blue",
+          "rgb": [0, 0, 255],
+        },
+        {
+          "title": "Grey",
+          "rgb": [128, 128, 128],
+        },
       ],
       "createdDate": Timestamp.now(),
       "discountedPrice": 25.0,
@@ -25,8 +29,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
     {
       "categoryId": "s6Ey1PGsnESFhfszFMil",
       "colors": [
-        {"title": "White", "rgb": [255, 255, 255]},
-        {"title": "Black", "rgb": [0, 0, 0]},
+        {
+          "title": "White",
+          "rgb": [255, 255, 255],
+        },
+        {
+          "title": "Black",
+          "rgb": [0, 0, 0],
+        },
       ],
       "createdDate": Timestamp.now(),
       "discountedPrice": 75.0,
@@ -42,8 +52,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
     {
       "categoryId": "bVAEvxRwL6kPkzr9JroC",
       "colors": [
-        {"title": "Green", "rgb": [0, 128, 0]},
-        {"title": "Purple", "rgb": [128, 0, 128]},
+        {
+          "title": "Green",
+          "rgb": [0, 128, 0],
+        },
+        {
+          "title": "Purple",
+          "rgb": [128, 0, 128],
+        },
       ],
       "createdDate": Timestamp.now(),
       "discountedPrice": 45.0,
@@ -59,8 +75,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
     {
       "categoryId": "HeSNenYfyQfASCn7NUDu",
       "colors": [
-        {"title": "Brown", "rgb": [165, 42, 42]},
-        {"title": "Beige", "rgb": [245, 245, 220]},
+        {
+          "title": "Brown",
+          "rgb": [165, 42, 42],
+        },
+        {
+          "title": "Beige",
+          "rgb": [245, 245, 220],
+        },
       ],
       "createdDate": Timestamp.now(),
       "discountedPrice": 50.0,
@@ -76,8 +98,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
     {
       "categoryId": "DvUv5F6zZDpaAO6vztj3",
       "colors": [
-        {"title": "Navy", "rgb": [0, 0, 128]},
-        {"title": "Black", "rgb": [0, 0, 0]},
+        {
+          "title": "Navy",
+          "rgb": [0, 0, 128],
+        },
+        {
+          "title": "Black",
+          "rgb": [0, 0, 0],
+        },
       ],
       "createdDate": Timestamp.now(),
       "discountedPrice": 80.0,
@@ -88,7 +116,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
       "productId": "prod_jacket_1",
       "salesNumber": 25,
       "title": "Waterproof Outdoor Jacket",
-    }
+    },
   ];
 
   final productsCollection = FirebaseFirestore.instance.collection('Products');
@@ -97,5 +125,5 @@ import 'package:cloud_firestore/cloud_firestore.dart';
     await productsCollection.add(product);
   }
 
-  print("Tüm ürünler Firebase'e başarıyla eklendi.");
+  // print("Tüm ürünler Firebase'e başarıyla eklendi.");
 }

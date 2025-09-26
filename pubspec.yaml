@@ -42,6 +42,9 @@ dependencies:
   dartz: ^0.10.1
   get_it: ^8.2.0
   firebase_auth: ^6.0.2
+  email_validator: ^3.0.0
+  flutter_screenutil: ^5.9.3
+  logger: ^2.6.1
 
 
 dev_dependencies:

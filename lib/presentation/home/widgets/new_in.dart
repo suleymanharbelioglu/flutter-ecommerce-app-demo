@@ -7,6 +7,7 @@ import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/domain/product/entity/product.dart';
 import 'package:flutter_ecommerce_app/domain/product/usecases/get_new_in.dart';
 import 'package:flutter_ecommerce_app/service_locator.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewIn extends StatelessWidget {
   const NewIn({super.key});
@@ -27,7 +28,7 @@ class NewIn extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _newIn(),
-                SizedBox(height: 20),
+                SizedBox(height: 20.h),
                 _products(state.products),
               ],
             );
@@ -40,12 +41,12 @@ class NewIn extends StatelessWidget {
 
   Widget _newIn() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Text(
         "New In",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 16,
+          fontSize: 16.sp,
           color: AppColors.primary,
         ),
       ),
@@ -54,16 +55,16 @@ class NewIn extends StatelessWidget {
 
   _products(List<ProductEntity> products) {
     return SizedBox(
-      height: 300,
+      height: 300.h,
       child: ListView.separated(
         shrinkWrap: true,
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return ProductCard(productEntity: products[index]);
         },
         separatorBuilder: (context, index) {
-          return SizedBox(width: 10);
+          return SizedBox(width: 10.w);
         },
         itemCount: products.length,
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BasicAppbar extends StatelessWidget implements PreferredSizeWidget {
   final Widget? title;
@@ -23,7 +24,7 @@ class BasicAppbar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,
-      toolbarHeight: height ?? 80,
+      toolbarHeight: (height ?? 80).h,
       title: title ?? Text(""),
       titleSpacing: 0,
       actions: [action ?? Container()],
@@ -34,15 +35,15 @@ class BasicAppbar extends StatelessWidget implements PreferredSizeWidget {
                 Navigator.pop(context);
               },
               icon: Container(
-                height: 50,
-                width: 50,
+                height: 50.h,
+                width: 50.w,
                 decoration: BoxDecoration(
                   color: AppColors.secondBackground,
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
                   Icons.arrow_back_ios_new,
-                  size: 15,
+                  size: 15.sp,
                   color: Colors.white,
                 ),
               ),
@@ -51,6 +52,5 @@ class BasicAppbar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
-  Size get preferredSize => Size.fromHeight(height ?? 50);
+  Size get preferredSize => Size.fromHeight((height ?? 50).h);
 }

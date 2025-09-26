@@ -10,6 +10,7 @@ import 'package:flutter_ecommerce_app/presentation/home/bloc/user_info_display_c
 import 'package:flutter_ecommerce_app/presentation/home/bloc/user_info_display_state.dart';
 import 'package:flutter_ecommerce_app/presentation/settings/pages/settings.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Header extends StatelessWidget {
   const Header({super.key});
@@ -19,7 +20,7 @@ class Header extends StatelessWidget {
     return BlocProvider(
       create: (context) => UserInfoDisplayCubit()..displayUserInfo(),
       child: Padding(
-        padding: const EdgeInsets.only(top: 40, right: 16, left: 16),
+        padding: EdgeInsets.only(top: 40.h, right: 16.w, left: 16.w),
         child: BlocBuilder<UserInfoDisplayCubit, UserInfoDisplayState>(
           builder: (context, state) {
             if (state is UserInfoLoading) {
@@ -48,15 +49,15 @@ class Header extends StatelessWidget {
         AppNavigator.push(context, SettingsPage());
       },
       child: Container(
-        height: 40,
-        width: 40,
+        height: 40.h,
+        width: 40.w,
         decoration: BoxDecoration(
           color: Colors.red,
           shape: BoxShape.circle,
           image: DecorationImage(
             image: user.image.isEmpty
                 ? AssetImage(AppImages.profile)
-                : NetworkImage(user.image),
+                : NetworkImage(user.image) as ImageProvider,
           ),
         ),
       ),
@@ -65,16 +66,16 @@ class Header extends StatelessWidget {
 
   _gender(UserEntity user) {
     return Container(
-      height: 40,
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      height: 40.h,
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       decoration: BoxDecoration(
         color: AppColors.secondBackground,
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(100.r),
       ),
       child: Center(
         child: Text(
           user.gender == 1 ? "Men" : "Women",
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16.sp),
         ),
       ),
     );
@@ -86,8 +87,8 @@ class Header extends StatelessWidget {
         AppNavigator.push(context, CartPage());
       },
       child: Container(
-        height: 40,
-        width: 40,
+        height: 40.h,
+        width: 40.w,
         decoration: BoxDecoration(
           color: AppColors.primary,
           shape: BoxShape.circle,

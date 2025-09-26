@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_ecommerce_app/common/bloc/button/button_cubit.dart';
 import 'package:flutter_ecommerce_app/common/bloc/button/button_state.dart';
 import 'package:flutter_ecommerce_app/common/helper/cart/cart.dart';
@@ -13,15 +14,21 @@ import 'package:flutter_ecommerce_app/domain/order/usecases/order_registration.d
 import 'package:flutter_ecommerce_app/presentation/cart/pages/order_placed.dart';
 
 class CheckaoutPage extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
   final List<ProductOrderedEntity> products;
   CheckaoutPage({super.key, required this.products});
-  final TextEditingController _addressCon = TextEditingController(
-    text: "address bla bla ",
-  );
+  final TextEditingController _addressCon = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: BasicAppbar(hideBack: false, title: Text("Checkout")),
+      appBar: BasicAppbar(
+        hideBack: false,
+        title: Text(
+          "Checkout",
+          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+        ),
+      ),
       body: BlocProvider(
         create: (context) => ButtonStateCubit(),
         child: BlocListener<ButtonStateCubit, ButtonState>(
@@ -30,41 +37,48 @@ class CheckaoutPage extends StatelessWidget {
               AppNavigator.pushAndRemove(context, OrderPlaced());
             }
             if (state is ButtonFailureState) {
-              var snackbar = SnackBar(
-                content: Text(state.errorMessage),
-                behavior: SnackBarBehavior.floating,
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage),
+                  behavior: SnackBarBehavior.floating,
+                ),
               );
-              ScaffoldMessenger.of(context).showSnackBar(snackbar);
             }
           },
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.w),
             child: Builder(
               builder: (context) {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _addressFiled(context),
+                    _addressField(context),
+                    SizedBox(height: 16.h),
                     BasicReactiveButton(
                       onPressed: () {
-                        context.read<ButtonStateCubit>().execute(
-                          usecase: OrderRegistrationUseCase(),
-                          params: OrderRegistrationReq(
-                            products: products,
-                            createdDate: DateTime.now().toString(),
-                            shippingAdress: _addressCon.text,
-                            itemCount: products.length,
-                            totalPrice: CartHelper.calculateCartSubtotal(
-                              products,
+                        if (_formKey.currentState!.validate()) {
+                          context.read<ButtonStateCubit>().execute(
+                            usecase: OrderRegistrationUseCase(),
+                            params: OrderRegistrationReq(
+                              products: products,
+                              createdDate: DateTime.now().toString(),
+                              shippingAdress: _addressCon.text,
+                              itemCount: products.length,
+                              totalPrice: CartHelper.calculateCartSubtotal(
+                                products,
+                              ),
+                              code: OrdeHelper.createOrderCode(),
+                              orderStatus:
+                                  OrdeHelper.randomOrderStatusListCreater(),
                             ),
-                            code: OrdeHelper.createOrderCode(),
-                            orderStatus:
-                                OrdeHelper.randomOrderStatusListCreater(),
-                          ),
-                        );
+                          );
+                        }
                       },
                       content: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 8),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8.w,
+                          vertical: 12.h,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -73,7 +87,7 @@ class CheckaoutPage extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                               ),
                             ),
                             Text(
@@ -81,7 +95,7 @@ class CheckaoutPage extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                               ),
                             ),
                           ],
@@ -98,12 +112,24 @@ class CheckaoutPage extends StatelessWidget {
     );
   }
 
-  _addressFiled(BuildContext context) {
-    return TextField(
-      controller: _addressCon,
-      minLines: 2,
-      maxLines: 4,
-      decoration: InputDecoration(hintText: "Shipping Address"),
+  Widget _addressField(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: TextFormField(
+        controller: _addressCon,
+        minLines: 2,
+        maxLines: 4,
+        decoration: InputDecoration(
+          hintText: "Shipping Address",
+          border: OutlineInputBorder(),
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Address is required';
+          }
+          return null;
+        },
+      ),
     );
   }
 }

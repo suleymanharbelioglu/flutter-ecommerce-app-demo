@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/domain/product/entity/product.dart';
 import 'package:flutter_ecommerce_app/presentation/product_detail/bloc/product_quantity_cubit.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProductQuantity extends StatelessWidget {
   final ProductEntity productEntity;
@@ -11,19 +12,19 @@ class ProductQuantity extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      padding: EdgeInsets.only(left: 12),
+      height: 60.h,
+      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.only(left: 12.w),
       decoration: BoxDecoration(
         color: AppColors.secondBackground,
-        borderRadius: BorderRadius.circular(100),
+        borderRadius: BorderRadius.circular(100.r),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             "Quantity",
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14.sp),
           ),
           Row(
             children: [
@@ -32,37 +33,40 @@ class ProductQuantity extends StatelessWidget {
                   context.read<ProductQuantityCubit>().decrement();
                 },
                 icon: Container(
-                  height: 40,
-                  width: 40,
+                  height: 40.h,
+                  width: 40.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.primary,
                   ),
-                  child: Center(child: Icon(Icons.remove, size: 30)),
+                  child: Center(child: Icon(Icons.remove, size: 30.sp)),
                 ),
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 10.w),
               BlocBuilder<ProductQuantityCubit, int>(
                 builder: (context, state) {
                   return Text(
                     state.toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
+                    ),
                   );
                 },
               ),
-              SizedBox(width: 10),
+              SizedBox(width: 10.w),
               IconButton(
                 onPressed: () {
                   context.read<ProductQuantityCubit>().increment();
                 },
                 icon: Container(
-                  height: 40,
-                  width: 40,
+                  height: 40.h,
+                  width: 40.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: AppColors.primary,
                   ),
-                  child: Center(child: Icon(Icons.add, size: 30)),
+                  child: Center(child: Icon(Icons.add, size: 30.sp)),
                 ),
               ),
             ],

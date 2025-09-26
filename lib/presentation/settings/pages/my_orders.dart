@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/domain/order/entity/order.dart';
 import 'package:flutter_ecommerce_app/presentation/settings/bloc/orders_display_cubit.dart';
 import 'package:flutter_ecommerce_app/presentation/settings/bloc/orders_display_state.dart';
+import 'package:flutter_ecommerce_app/presentation/settings/pages/order_detail.dart';
 
 class MyOrdersPage extends StatelessWidget {
   const MyOrdersPage({super.key});
@@ -39,7 +41,12 @@ class MyOrdersPage extends StatelessWidget {
 
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () {},
+          onTap: () {
+            AppNavigator.push(
+              context,
+              OrderDetailPage(orderEntity: orders[index]),
+            );
+          },
           child: Container(
             height: 70,
             padding: EdgeInsets.symmetric(horizontal: 16),

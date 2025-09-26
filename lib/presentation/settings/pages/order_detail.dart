@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecommerce_app/common/helper/navigator/app_navigator.dart';
 import 'package:flutter_ecommerce_app/common/widgets/appbar/app_bar.dart';
 import 'package:flutter_ecommerce_app/core/configs/theme/app_colors.dart';
 import 'package:flutter_ecommerce_app/domain/order/entity/order.dart';
+import 'package:flutter_ecommerce_app/presentation/settings/pages/order_items.dart';
 
 class OrderDetailPage extends StatelessWidget {
   final OrderEntity orderEntity;
@@ -101,7 +103,10 @@ class OrderDetailPage extends StatelessWidget {
         SizedBox(height: 15),
         GestureDetector(
           onTap: () {
-            // Order Items Page
+            AppNavigator.push(
+              context,
+              OrderItemsPage(products: orderEntity.products),
+            );
           },
           child: Container(
             height: 70,

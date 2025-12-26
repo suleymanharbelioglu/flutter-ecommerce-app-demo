@@ -29,8 +29,8 @@ class SplashPage extends StatelessWidget {
         body: Center(
           child: SvgPicture.asset(
             AppVectors.appLogo,
-            width: 150.w, // responsive width
-            height: 150.h, // responsive height
+            width: 80.w, // responsive width
+            height: 80.h, // responsive height
           ),
         ),
       ),

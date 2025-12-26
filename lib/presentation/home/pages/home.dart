@@ -13,21 +13,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w), // responsive padding
-          child: Column(
-            children: [
-              Header(),
-              SizedBox(height: 24.h),
-              SearchField(),
-              SizedBox(height: 24.h),
-              Categories(),
-              SizedBox(height: 24.h),
-              TopSelling(),
-              SizedBox(height: 24.h),
-              NewIn(),
-            ],
-          ),
+        child: Column(
+          children: [
+            Header(),
+            SizedBox(height: 24.h),
+            SearchField(),
+            SizedBox(height: 24.h),
+            Categories(),
+            SizedBox(height: 24.h),
+            TopSelling(),
+            SizedBox(height: 24.h),
+            NewIn(),
+          ],
         ),
       ),
     );

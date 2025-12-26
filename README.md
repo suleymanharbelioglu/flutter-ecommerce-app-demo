@@ -8,7 +8,7 @@ This project is created for learning, practice, and portfolio purposes, showcasi
 
 ## 🔐 Authentication & User Onboarding
 
-<img src="screenshots/signin.png" width="230"/> <img src="screenshots/signup.png" width="230"/> <img src="screenshots/enter_password.png" width="230"/> <img src="screenshots/gender_age.png" width="230"/>
+<img src="screenshots/signin.png" width="200"/> <img src="screenshots/signup.png" width="200"/> <img src="screenshots/enter_password.png" width="200"/> <img src="screenshots/gender_age.png" width="200"/>
 
 **Features:**
 - Firebase Authentication (Sign In / Sign Up)
@@ -20,7 +20,7 @@ This project is created for learning, practice, and portfolio purposes, showcasi
 
 ## 🛍 Product Browsing & Favorites
 
-<img src="screenshots/main_page.png" width="230"/> <img src="screenshots/categories.png" width="230"/> <img src="screenshots/product.png" width="230"/> <img src="screenshots/favorites.png" width="230"/>
+<img src="screenshots/main_page.png" width="200"/> <img src="screenshots/categories.png" width="200"/> <img src="screenshots/product.png" width="200"/> <img src="screenshots/favorites.png" width="200"/>
 
 **Features:**
 - Product listing from Firestore
@@ -33,7 +33,7 @@ This project is created for learning, practice, and portfolio purposes, showcasi
 
 ## 🛒 Cart, Orders & Settings
 
-<img src="screenshots/bag.png" width="230"/> <img src="screenshots/orders.png" width="230"/> <img src="screenshots/order_finished.png" width="230"/> <img src="screenshots/settings.png" width="230"/>
+<img src="screenshots/bag.png" width="200"/> <img src="screenshots/orders.png" width="200"/> <img src="screenshots/order_finished.png" width="200"/> <img src="screenshots/settings.png" width="200"/>
 
 **Features:**
 - Cart (bag) management
